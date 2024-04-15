@@ -6,7 +6,7 @@ import pandas as pd
 from tabulate import tabulate
 
 
-class AprioriGUI:
+class AprioriWithGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Apriori Algorithm GUI")
