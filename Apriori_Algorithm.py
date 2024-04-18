@@ -60,7 +60,7 @@ class AprioriWithGUI:
             self.display_frequent_itemset(frequent_item_sets)
             # Generate association rules
             association_rules = self.generate_association_rules(frequent_item_sets, min_confidence)
-            print("Association Rules generated :", association_rules)  # Add this line for debugging
+            print("Association Rules generated :", association_rules)  
 
         # Display association rules
         self.display_association_rules(association_rules)
@@ -101,7 +101,7 @@ class AprioriWithGUI:
             # Get frequent itemsets Lk
             Lk = self.generate_frequent_itemsets(data, Ck_items, min_support_count)
             print(tabulate([[', '.join(list(item)), support_count] for item, support_count in Lk.items()],
-                           headers=["Item", "Support Count"]))
+                        headers=["Item", "Support Count"]))
 
             if not Lk:
                 print("No frequent itemsets found for iteration", k)
@@ -131,7 +131,7 @@ class AprioriWithGUI:
                     Ck_support_counts[itemset] += 1
 
         Lk = {itemset: support_count for itemset, support_count in Ck_support_counts.items() if
-              support_count >= min_support_count}
+            support_count >= min_support_count}
         return Lk
 
     def generate_association_rules(self, frequent_item_sets, min_confidence):
@@ -139,7 +139,7 @@ class AprioriWithGUI:
         for itemset in frequent_item_sets.keys():
             if len(itemset) > 1:
                 self.generate_rules_from_itemset(itemset, frequent_item_sets, association_rules, min_confidence)
-        print("Association Rules:", association_rules)  # Add this line for debugging
+        print("Association Rules:", association_rules)  
         return association_rules
 
     def generate_rules_from_itemset(self, itemset, frequent_item_sets, association_rules, min_confidence):
@@ -152,7 +152,7 @@ class AprioriWithGUI:
                     association_rules.append((LHS, RHS, confidence))
 
     def display_frequent_itemset(self, frequent_item_sets):
-        self.frequent_item_sets_text.delete(1.0, tk.END)  # Clear previous content
+        self.frequent_item_sets_text.delete(1.0, tk.END)  
         self.frequent_item_sets_text.insert(tk.END, "Frequent Item Sets:\n")
 
         # Display each item set
@@ -161,26 +161,24 @@ class AprioriWithGUI:
             support_count = frequent_item_sets[item_set]
             self.frequent_item_sets_text.insert(tk.END, f"Item Set: {{{items_str}}}, Support Count: {support_count}\n")
 
-        # Expand the text widget vertically and horizontally
         self.frequent_item_sets_text.pack(fill=tk.BOTH, expand=True)
 
 
 
     def display_association_rules(self, association_rules):
-        self.association_rules_text.delete(1.0, tk.END)  # Clear previous content
+        self.association_rules_text.delete(1.0, tk.END)  
         self.association_rules_text.insert(tk.END, "Strong Association Rules:\n")
         for rule in association_rules:
             LHS = "{" + ', '.join(rule[0]) + "}"
             RHS = "{" + ', '.join(rule[1]) + "}"
             self.association_rules_text.insert(tk.END, f"Rule: {LHS} => {RHS}, Confidence: {rule[2]}\n")
-            # Expand the text widget vertically and horizontally
             self.association_rules_text.pack(fill=tk.BOTH, expand=True)
 
 
 
 if __name__ == "__main__":
     root = tk.Tk()
-    app = AprioriGUI(root)
+    app = AprioriWithGUI(root)
     # Set window size and allow it to expand
     root.resizable(True, True)  # Allow both horizontal and vertical resizing
     root.mainloop()
